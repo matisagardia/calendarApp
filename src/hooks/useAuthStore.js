@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import calendarApi from '../api/calendarApi';
-import {onChecking} from '../store/auth/authSlice';
+import {clearErrorMessage, onChecking, onLogin, onLogout} from '../store/auth/authSlice';
 
 export const useAuthStore = () => {
 
@@ -10,13 +10,19 @@ export const useAuthStore = () => {
     const startLogin = async({ email, password }) => {
 
         dispatch(onChecking());
-        
+
         try {
-            const res = await calendarApi.post('/auth', { email, password });
-            console.log({ res });
-            
+            const { data } = await calendarApi.post('/auth', { email, password });
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('token-init-date', new Date().getTime());
+            dispatch(onLogin({ name: data.name, uid: data.uid }));
+
         } catch (error) {
-            console.log(error);
+
+            dispatch(onLogout('Wrong credentials'));
+            setTimeout(() => {
+                dispatch(clearErrorMessage());
+            }, 10);
         }
     };
 
