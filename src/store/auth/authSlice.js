@@ -1,13 +1,26 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const initialState = {
-
+export const initialState = {
+  status: 'checking',
+  user: {},
+  errorMessage: undefined,
 }
 
-const authSlice = createSlice({
-  name: second,
+export const authSlice = createSlice({
+  name: 'auth',
   initialState,
-  reducers: {}
+  reducers: {
+    onChecking: ( state ) => {
+      state.status = 'checking';
+      state.user = {};
+      state.errorMessage = undefined;
+    },
+    onLogin: ( state, { payload } ) => {
+      state.status = 'authenticated';
+      state.user = payload;
+      state.errorMessage = undefined;
+    }
+  }
 });
 
-export const {} = authSlice.actions
+export const { checking, onLogin } = authSlice.actions
