@@ -25,7 +25,7 @@ export const useCalendarStore = () => {
                 //Update event
                 await calendarApi.put(`/events/${calendarEvent.id}`, calendarEvent)
                 dispatch(onUpdateEvent({...calendarEvent, user}));
-                
+                console.log(...calendarEvent, user)
     
             } else {
                 //Create new event
@@ -41,8 +41,16 @@ export const useCalendarStore = () => {
     }
 
 
-    const startDeletingEvent = () => {
-        dispatch(onDeleteEvent());
+    const startDeletingEvent = async () => {
+        // Calling the delete on the backend
+        try {
+            await calendarApi.delete(`/events/${activeEvent.id}`);
+            dispatch(onDeleteEvent());
+        } catch (error) {
+            console.log(error);
+            Swal('Error while deleting', error.response.data.msg, 'error');
+        }
+
     }
 
 
