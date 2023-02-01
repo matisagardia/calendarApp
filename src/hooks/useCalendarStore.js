@@ -23,9 +23,8 @@ export const useCalendarStore = () => {
 
             if(calendarEvent.id) {
                 //Update event
-                await calendarApi.put(`/events/${calendarEvent.id}`, calendarEvent)
+                await calendarApi.put(`/events/${calendarEvent.id}`, calendarEvent);
                 dispatch(onUpdateEvent({...calendarEvent, user}));
-                console.log(...calendarEvent, user)
     
             } else {
                 //Create new event

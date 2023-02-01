@@ -65,6 +65,7 @@ export const CalendarModal = () => {
         [target.name]: target.value
       })
     };
+
     
     const onDateChange = (e, changing) => {
       
@@ -73,11 +74,13 @@ export const CalendarModal = () => {
         [changing]: e
       })
 
-    }
+    };
+    
 
     const onCloseModal = () => {
         closeDateModal();
     };
+
 
     const onSubmit = async(e) => {
       e.preventDefault();
